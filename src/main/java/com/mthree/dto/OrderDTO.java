@@ -2,6 +2,7 @@ package com.mthree.dto;
 
 public class OrderDTO {
 
+	private int orderId;
 	private int userId;
 	private float price;
 	private int noofShares;
@@ -9,14 +10,23 @@ public class OrderDTO {
 	private String buyOrSell;
 	
 	OrderDTO(){}
-	
-	public OrderDTO(int userId, float price, int noofShares, String companyName, String buyOrSell) {
+
+	public OrderDTO(int orderId, int userId, float price, int noofShares, String companyName, String buyOrSell) {
 		super();
+		this.orderId = orderId;
 		this.userId = userId;
 		this.price = price;
 		this.noofShares = noofShares;
 		this.companyName = companyName;
 		this.buyOrSell = buyOrSell;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public int getUserId() {
@@ -61,9 +71,11 @@ public class OrderDTO {
 
 	@Override
 	public String toString() {
-		return "OrderDTO [userId=" + userId + ", price=" + price + ", noofShares=" + noofShares + ", companyName="
-				+ companyName + ", buyOrSell=" + buyOrSell + "]";
+		return "OrderDTO [orderId=" + orderId + ", userId=" + userId + ", price=" + price + ", noofShares=" + noofShares
+				+ ", companyName=" + companyName + ", buyOrSell=" + buyOrSell + "]";
 	}
+	
+	
 	
 	
 	

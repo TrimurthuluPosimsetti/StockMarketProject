@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrdersDetails {
 	@Id
 	@GeneratedValue
+	private int orderId;
 	private int userId;
 	private float price;
 	private int noofShares;
 	private String companyName;
 	private String buyOrSell;
+	private String status;
 	@Autowired
 	@ManyToOne
 	@JoinColumn(name="trader_name")
@@ -24,15 +26,25 @@ public class OrdersDetails {
 	
 	OrdersDetails(){}
 
-	public OrdersDetails(int userId, float price, int noofShares, String companyName, String buyOrSell,
-			OrderBookDetails traderName) {
+	public OrdersDetails(int orderId, int userId, float price, int noofShares, String companyName, String buyOrSell,
+			String status, OrderBookDetails traderName) {
 		super();
+		this.orderId = orderId;
 		this.userId = userId;
 		this.price = price;
 		this.noofShares = noofShares;
 		this.companyName = companyName;
 		this.buyOrSell = buyOrSell;
+		this.status = status;
 		this.traderName = traderName;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public int getUserId() {
@@ -75,6 +87,14 @@ public class OrdersDetails {
 		this.buyOrSell = buyOrSell;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public OrderBookDetails getTraderName() {
 		return traderName;
 	}
@@ -85,15 +105,13 @@ public class OrdersDetails {
 
 	@Override
 	public String toString() {
-		return "Orders [userId=" + userId + ", price=" + price + ", noofShares=" + noofShares + ", companyName="
-				+ companyName + ", buyOrSell=" + buyOrSell + ", traderName="
-				+ traderName + "]";
+		return "OrdersDetails [orderId=" + orderId + ", userId=" + userId + ", price=" + price + ", noofShares="
+				+ noofShares + ", companyName=" + companyName + ", buyOrSell=" + buyOrSell + ", status=" + status
+				+ ", traderName=" + traderName + "]";
 	}
 
 	
-
 	
-		
 	
 	
 }
