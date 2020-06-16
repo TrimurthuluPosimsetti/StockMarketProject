@@ -3,19 +3,19 @@ package com.mthree.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mthree.dto.AllOrdersDTO;
 import com.mthree.dto.OrderDTO;
 import com.mthree.models.OrdersDetails;
 import com.mthree.services.SMServices;
 
-@RestController
+@Controller
 public class SMController {
 	
 	@Autowired
@@ -23,28 +23,22 @@ public class SMController {
 	
 	@GetMapping(path="/home")
 	public String welcomePage() {
-		return "welcome";
+		return "homepage";
 	}
 	
-	@RequestMapping("/index")
+	@GetMapping("/index")
 	public List<OrderDTO> getOrderBook(){
 		return smservice.getOrderBookService();	
 	}
+
 	
-	@RequestMapping("/validate")
-	public List<OrderDTO> getCompleteOrderBook(@RequestBody OrdersDetails od){
-		return smservice.getOrderCompleteBookService(od);
+	@GetMapping("/validate")
+	public ModelAndView getCompleteOrderBook(@RequestBody OrdersDetails od){
+		 smservice.getOrderCompleteBookService(od);
+		 ModelAndView mv=new ModelAndView();
+		 mv.setViewName("orderHistory");
+		 return mv;
 	}
 	
-	
-	@GetMapping("/getOrders")
-	public List<AllOrdersDTO> getOrdersHistory(@RequestParam int userId){
-		return smservice.getOrders(userId);
-	}
-	
-	@DeleteMapping("/deleteOrder")
-	public String deleteOrder(@RequestParam int orderId) {
-		return smservice.deleteOrder(orderId);
-	}
 	
 }

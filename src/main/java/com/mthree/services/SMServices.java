@@ -27,7 +27,7 @@ public class SMServices {
 		return smrepo.getOrderBookRepo();
 	}
 	
-	public List<OrderDTO> getOrderCompleteBookService(OrdersDetails od){
+	public void getOrderCompleteBookService(OrdersDetails od){
 		
 		List<OrderDTO> odto=null;
 		List<SorDTO> sdto=null;
@@ -50,7 +50,6 @@ public class SMServices {
 			odto=smrepo.getOrderCompleteBookRepository(tn,cn,bs,"auction");
 			s.limitOrder(od, odto,od.getBuyOrSell());
 			}
-		return odto;
 		//return smrepo.getOrderCompleteBookRepository();
 	}
 	
