@@ -3,11 +3,14 @@ package com.mthree.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mthree.dto.AllOrdersDTO;
 import com.mthree.dto.OrderDTO;
 import com.mthree.models.OrdersDetails;
 import com.mthree.services.SMServices;
@@ -31,6 +34,17 @@ public class SMController {
 	@RequestMapping("/validate")
 	public List<OrderDTO> getCompleteOrderBook(@RequestBody OrdersDetails od){
 		return smservice.getOrderCompleteBookService(od);
+	}
+	
+	
+	@GetMapping("/getOrders")
+	public List<AllOrdersDTO> getOrdersHistory(@RequestParam int userId){
+		return smservice.getOrders(userId);
+	}
+	
+	@DeleteMapping("/deleteOrder")
+	public String deleteOrder(@RequestParam int orderId) {
+		return smservice.deleteOrder(orderId);
 	}
 	
 }
