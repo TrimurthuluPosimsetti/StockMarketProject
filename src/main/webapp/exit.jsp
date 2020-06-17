@@ -59,6 +59,14 @@
 			{
 				text-decoration: underline;
 			}
+			#nav li:hover
+			{
+				background: none;
+				border-radius: 40px;
+				border: 2px solid;
+				border-color: red;
+				color: #FFF;
+			}
 			
 		ul.style {
 		}
@@ -98,11 +106,18 @@
 	#header
 	{
 		position: relative;
-		background: #2a2f27 url(banner.jpg) no-repeat;
 		background-size: cover;
 		padding: 5em 0em;
 		text-align: center;
 	}
+	body {
+	
+  background: url(banner.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 	#main
 	{
 		position: relative;

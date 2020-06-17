@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -98,11 +101,17 @@
 	#header
 	{
 		position: relative;
-		background: #2a2f27 url(banner.jpg) no-repeat;
 		background-size: cover;
 		padding: 5em 0em;
 		text-align: center;
 	}
+	body {
+  background: url(banner.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 	#main
 	{
 		position: relative;
@@ -159,6 +168,14 @@
 				outline: 0;
 				color: rgba(255,255,255,.7);
 			}
+			#nav li:hover
+			{
+				background: none;
+				border-radius: 40px;
+				border: 2px solid;
+				border-color: red;
+				color: #FFF;
+			}
 			#nav li.active a
 			{
 				background: none;
@@ -173,7 +190,7 @@
 		padding-bottom: 2em;
 		font-size: 1.4em;
 	}
-
+	
 <%
 String ids=String.valueOf(session.getAttribute("userId"));
 %>
