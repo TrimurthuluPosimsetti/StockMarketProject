@@ -1,11 +1,8 @@
 <%@page import="com.mthree.models.OrdersDetails"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <style>
 body {
   font-family: 'Open Sans', sans-serif;
@@ -173,4 +170,3 @@ List<OrdersDetails> orders;
 </form>
 </body>
 </html>
-

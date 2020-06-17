@@ -1,10 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
-	<meta charset="ISO-8859-1">
-	
 		<title>Sort</title>
 		
 		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>

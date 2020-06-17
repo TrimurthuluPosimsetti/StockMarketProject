@@ -1,9 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <style>
 * { box-sizing: border-box; }
 body {
@@ -100,7 +96,7 @@ input[type=checkbox] {
   vertical-align:top;
 }
 .p-container {
- 	padding:5 10px 10px 10px; 
+ 	padding:0 10px 10px 10px; 
 }
 .p-container:after {
  	clear:both;
@@ -143,7 +139,7 @@ label:hover ~ input[type=password] {
 </head>
 <body>
 <form>
-  <h1>Log in</h1>
+  <h1>Sign up</h1>
   <div class="inset">
   <p>
     <label for="email">EMAIL ADDRESS</label>
@@ -154,14 +150,12 @@ label:hover ~ input[type=password] {
     <input type="password" name="password" id="password">
   </p>
   <p>
-    <input type="checkbox" name="remember" id="remember">
-    <label for="remember">Remember me</label>
+    <label for="password">CONFIRM PASSWORD</label>
+    <input type="password" name="password" id="password">
   </p>
   </div>
   <p class="p-container">
-    <span>Forgot password ?</span>
-    <input type="submit" name="go" id="go" value="Log in"  formaction="homepage.jsp">
-	<input type="submit" name="signgo" id="signgo" value="Sign up" formaction="signup.jsp">
+    <input type="submit" name="signgo" id="signgo" value="Sign up" formaction="homepage.jsp">
   </p>
 </form>
 </body>
