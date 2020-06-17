@@ -1,10 +1,7 @@
 package com.mthree.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.mthree.users.UserRepository;
-import com.mthree.users.UserInfo; 
+import org.springframework.stereotype.Service; 
 
 @Service
 public class UserService {

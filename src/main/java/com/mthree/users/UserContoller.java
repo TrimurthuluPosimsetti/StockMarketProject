@@ -1,17 +1,12 @@
 package com.mthree.users;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import com.mthree.users.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserContoller {
@@ -19,15 +14,18 @@ public class UserContoller {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired 
+	private UserRepository userRepository;
 	
 	@PostMapping("/signup")
-	public String signup(@RequestBody UserSignupDto user) {
+	public String signup(@RequestParam("email") String username,@RequestParam("password") String password,@RequestParam("cpassword") String cpassword) {
 		
+		UserSignupDto user=new UserSignupDto(username,password,cpassword);
 		
 		UserInfo newUser = userService.signupUser(user);
 		
 		if(newUser!=null) {
-			return "redirect:/login";
+			return "redirect:/index";
 		}
 		else {
 			return "signup";
@@ -37,17 +35,23 @@ public class UserContoller {
 	}
 	
 	
-	@RequestMapping("/login")	
-	public String login(@RequestBody UserLoginDto userLoginDto) {
+	@PostMapping("/login")	
+	public String login(HttpServletRequest request,@RequestParam("email") String username,@RequestParam("password") String password) {
 		
-		String login =  userService.loginUser(userLoginDto);
+		UserLoginDto udto=new UserLoginDto(username,password);
+		String login =  userService.loginUser(udto);
 		
-		if (login != null) {
-			return "redirect:/homepage";
+		
+		
+		if (login == "logged in!") {
+			HttpSession session=request.getSession(true);
+			session.setAttribute("userId",userRepository.getId(username));
+			System.out.println(session.getAttribute("userId"));
+			return "redirect:/homepage.jsp";
 //			return new ModelAndView("homepage");
 		}
 		else {
-			return "login";
+			return "index";
 		}
 	
 	}

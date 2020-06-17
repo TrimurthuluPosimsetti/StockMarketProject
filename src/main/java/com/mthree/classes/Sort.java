@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.mthree.dto.OrderDTO;
 import com.mthree.dto.SorDTO;
+import com.mthree.models.OrderBookDetails;
 import com.mthree.models.OrdersDetails;
 import com.mthree.repository.SMRepository;
 import com.mthree.repository.SMRepositoryOBD;
@@ -42,20 +43,20 @@ public class Sort {
 	@Autowired 
 	private SMRepositoryOBD smrepoOBD;
 	
-	public void marketOrder(OrdersDetails od,List<SorDTO> odto,String bors,float margin) {
+	public void marketOrder(int userId, float price, int noofShares, String cn, String bs, String status,String tn,List<SorDTO> odto,float margin) {
 		
 		Collections.sort(odto,new comp2());
 		
-		if(bors.equals("buy")) {
+		if(bs.equals("buy")) {
 			
 			for(SorDTO o:odto) {
 				
 				int i=0;
 				
 				//when shares price per share same for both buyer and seller
-				if(o.getPrice()/o.getNoofShares()<=od.getPrice()/od.getNoofShares() || o.getPrice()/o.getNoofShares()<=od.getPrice()+(od.getPrice()*margin/100)/od.getNoofShares()) {
-					
-					od.setTraderName(smrepoOBD.getOrderBookDetails(o.getTraderName()));
+				if(o.getPrice()/o.getNoofShares()<=price/noofShares || o.getPrice()/o.getNoofShares()<=price+(price*margin/100)/noofShares) {
+					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
+					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
 						od.setPrice(od.getPrice());
@@ -90,9 +91,10 @@ public class Sort {
 				int i=0;
 				
 				//when shares price per share same for both buyer and seller
-				if(o.getPrice()/o.getNoofShares()>=od.getPrice()/od.getNoofShares() || o.getPrice()/o.getNoofShares()>=(od.getPrice()-(od.getPrice()*20/100))/od.getNoofShares()) {
+				if(o.getPrice()/o.getNoofShares()>=price/noofShares || o.getPrice()/o.getNoofShares()>=(price-price*20/100)/noofShares) {
 					
-					od.setTraderName(smrepoOBD.getOrderBookDetails(o.getTraderName()));
+					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
+					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),o.getPrice(),"owned");
 						od.setPrice(o.getPrice());
@@ -169,7 +171,7 @@ public class Sort {
 				
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()>=od.getPrice()/od.getNoofShares()) {
-					
+					//System.out.println(o.getNoofShares()+" "+od.getNoofShares());
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),od.getPrice(),"owned");
 						od.setStatus("sold");

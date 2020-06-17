@@ -166,7 +166,7 @@ label:hover ~ input[type=float] {
   <select name="buyorsell" id="buy or sell">
   <option>--select</option>
   <option value="buy">Buy</option>
-  <option value="Sell">Sell</option>
+  <option value="sell">Sell</option>
 </select>
 <label for="Trader Name">Trader Name:</label>
 <select name="tradername" id="Trader Name">

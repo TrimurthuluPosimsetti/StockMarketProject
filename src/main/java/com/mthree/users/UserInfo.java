@@ -1,12 +1,14 @@
 package com.mthree.users;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class UserInfo {
 	
 	@Id
+	@GeneratedValue
 	private int userId;
 	private String userName;
 	private String password;

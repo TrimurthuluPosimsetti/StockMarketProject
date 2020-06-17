@@ -6,6 +6,13 @@ public class UserSignupDto {
 	private String password;
 	private String passwordConfirm;
 	
+	public UserSignupDto(String userName, String password, String passwordConfirm) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+	}
+	
 	public String getUserName() {
 		return userName;
 	}

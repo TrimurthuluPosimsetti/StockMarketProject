@@ -138,7 +138,7 @@ label:hover ~ input[type=password] {
 </style>
 </head>
 <body>
-<form>
+<form method ="POST">
   <h1>Sign up</h1>
   <div class="inset">
   <p>
@@ -151,11 +151,11 @@ label:hover ~ input[type=password] {
   </p>
   <p>
     <label for="password">CONFIRM PASSWORD</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="cpassword" id="password">
   </p>
   </div>
   <p class="p-container">
-    <input type="submit" name="signgo" id="signgo" value="Sign up" formaction="homepage.jsp">
+    <input type="submit" name="signgo" id="signgo" value="Sign up"  formaction="${pageContext.request.contextPath}/signup">
   </p>
 </form>
 </body>
