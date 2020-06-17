@@ -173,8 +173,10 @@
 		padding-bottom: 2em;
 		font-size: 1.4em;
 	}
-	
 
+<%
+int ids=(int)session.getAttribute("userId");
+%>
 		</style>
 	</head>
 	<body class="homepage">
@@ -187,7 +189,7 @@
 				<nav id="nav">
 					<ul>
 						<li class="active"><a href="index.html">Homepage</a></li>
-						<li><a href="orderhistory.jsp">View Order History</a></li>
+						<li><a href="${pageContext.request.contextPath}/getOrders?userId=<%=ids%>">View Order History</a></li>
 						<li><a href="NewOrder.jsp">New Order</a></li>
 						<li><a href="exit.jsp">Logout</a></li>
 						

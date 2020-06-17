@@ -1,4 +1,4 @@
-<%@page import="com.mthree.models.OrdersDetails"%>
+<%@page import="com.mthree.dto.AllOrdersDTO"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
@@ -128,36 +128,37 @@ input[type=submit] {
 
 <h1><span class="blue"></span>Order Details<span class="blue"></span></h1>
 </pre>
+
 <%!
-List<OrdersDetails> orders;
+List<AllOrdersDTO> orders;
 %>
-<form mwthod="post">
+<form action="/deleteOrder" method="post">
 <table class="container">
 	<thead>
 		<tr>
 			<th><h1>Company</h1></th>
 			<th><h1>Shares</h1></th>
 			<th><h1>Price</h1></th>
-			<th><h1>Trader</h1></th>
+			
 			<th><h1>Status</h1></th>
 			<th><h1></h1></th>
 		</tr>
 	</thead>
 	<%
 
-	orders = (List<OrdersDetails>) session.getAttribute("orderList");
-
-	for(OrdersDetails o : orders)
+	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
+	session.setAttribute("userId", 123);
+	for(AllOrdersDTO o : orders)
 	{
+	
 %>
 	<tbody>
 		<tr>
 			<td> <%=o.getCompanyName()%> </td>
 			<td><%=o.getNoofShares()%></td>
 			<td><%=o.getPrice()%></td>
-			<td><%=o.getTraderName()%></td>
 			<td><%=o.getStatus()%></td>
-			<td> <input type="submit" value="Cancel Order"/></td>
+			<td> <input type="submit" name="deleteOrder" onclick="this.value=<%out.print(o.getOrderId());%>" value="Cancel Order"></input></td>
 		</tr>
 	</tbody>
 	<% 
