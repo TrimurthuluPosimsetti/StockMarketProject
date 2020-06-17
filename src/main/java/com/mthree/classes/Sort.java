@@ -47,7 +47,10 @@ public class Sort {
 		
 		Collections.sort(odto,new comp2());
 		
+		int flag=0;
+		
 		if(bs.equals("buy")) {
+			
 			
 			for(SorDTO o:odto) {
 				
@@ -55,6 +58,8 @@ public class Sort {
 				
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()<=price/noofShares || o.getPrice()/o.getNoofShares()<=price+(price*margin/100)/noofShares) {
+					
+					flag=1;
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
 					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					if(o.getNoofShares()==od.getNoofShares()) {
@@ -93,6 +98,7 @@ public class Sort {
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()>=price/noofShares || o.getPrice()/o.getNoofShares()>=(price-price*20/100)/noofShares) {
 					
+					flag=1;
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
 					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					if(o.getNoofShares()==od.getNoofShares()) {
@@ -121,15 +127,26 @@ public class Sort {
 			
 		}
 		
+		if(flag==0) {
+			OrderBookDetails obd=smrepoOBD.getOrderBookDetails("nyse");
+			OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
+			smrepo.save(od);
+		}
+		
+		
+		
 	}
 
 	public void limitOrder(OrdersDetails od,List<OrderDTO> odto,String bors){
 		
 		
 		Collections.sort(odto,new comp());
+		int flag=0;
 		
 		if(bors.equals("buy")) {
 		
+			
+			
 			for(OrderDTO o:odto) {
 				
 				int i=0;
@@ -137,6 +154,7 @@ public class Sort {
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()<=od.getPrice()/od.getNoofShares()) {
 					
+					flag=1;
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
 						od.setStatus("owned");
@@ -171,6 +189,7 @@ public class Sort {
 				
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()>=od.getPrice()/od.getNoofShares()) {
+					flag=1;
 					//System.out.println(o.getNoofShares()+" "+od.getNoofShares());
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),od.getPrice(),"owned");
@@ -195,6 +214,10 @@ public class Sort {
 				
 			}
 			
+		}
+		
+		if(flag==0) {
+			smrepo.save(od);
 		}
 		
 	}

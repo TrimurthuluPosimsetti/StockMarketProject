@@ -175,7 +175,7 @@
 	}
 
 <%
-int ids=(int)session.getAttribute("userId");
+String ids=String.valueOf(session.getAttribute("userId"));
 %>
 		</style>
 	</head>

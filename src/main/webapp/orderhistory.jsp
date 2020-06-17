@@ -147,7 +147,6 @@ List<AllOrdersDTO> orders;
 	<%
 
 	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
-	session.setAttribute("userId", 123);
 	for(AllOrdersDTO o : orders)
 	{
 	
@@ -158,7 +157,7 @@ List<AllOrdersDTO> orders;
 			<td><%=o.getNoofShares()%></td>
 			<td><%=o.getPrice()%></td>
 			<td><%=o.getStatus()%></td>
-			<td> <input type="submit" name="deleteOrder" onclick="this.value=<%out.print(o.getOrderId());%>" value="Cancel Order"></input></td>
+			<td> <button type="submit" name="deleteOrder"  value="<%= o.getOrderId() %>">Delete</button></td>
 		</tr>
 	</tbody>
 	<% 

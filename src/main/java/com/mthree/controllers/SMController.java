@@ -30,13 +30,12 @@ public class SMController {
 
 	
 	@GetMapping("/validate")
-	public ModelAndView getCompleteOrderBook(@RequestParam("userid") int userId,@RequestParam("price") float price,@RequestParam("shares") int noofShares,@RequestParam("companyname") String companyName,@RequestParam("buyorsell") String buyOrSell,@RequestParam("tradername") String traderName){
+	public String getCompleteOrderBook(@RequestParam("userid") int userId,@RequestParam("price") float price,@RequestParam("shares") int noofShares,@RequestParam("companyname") String companyName,@RequestParam("buyorsell") String buyOrSell,@RequestParam("tradername") String traderName){
 		 
 		 //System.out.println(userId+" "+price+" "+noofShares+" "+companyName+" "+buyOrSell+" "+obd.getTraderName());
 		 smservice.getOrderCompleteBookService(userId,price,noofShares,companyName,buyOrSell,"auction",traderName);
 		 ModelAndView mv=new ModelAndView();
-		 mv.setViewName("orderHistory");
-		 return mv;
+		 return "redirect:/getOrders?userId="+String.valueOf(userId);
 	}
 	
 	

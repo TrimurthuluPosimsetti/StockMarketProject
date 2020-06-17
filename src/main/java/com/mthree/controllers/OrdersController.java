@@ -20,9 +20,12 @@ public class OrdersController {
 	@Autowired
 	private SMServices smservice;
 	
+
+	
 	@GetMapping(path="/getOrders")
-	public String getOrdersHistory(HttpServletRequest request, @RequestParam int userId){
-		List<AllOrdersDTO> aod=  smservice.getOrders(userId);
+	public String getOrdersHistory(HttpServletRequest request, @RequestParam String userId){
+		int uid=Integer.parseInt(userId);
+		List<AllOrdersDTO> aod=  smservice.getOrders(uid);
 		HttpSession session = request.getSession();
 		session.setAttribute("orderList", aod);
 		return "orderhistory";
@@ -30,16 +33,21 @@ public class OrdersController {
 	
 	@PostMapping(path="/deleteOrder")
 	public String deleteOrder(HttpServletRequest request) {
-		String pressdel = request.getParameter("deleteOrder");
+//		String pressdel = request.getParameter("deleteOrder");
 		HttpSession session = request.getSession();
+		String orderId = request.getParameter("deleteOrder");
 		int userId = (int) session.getAttribute("userId");
-		String result = smservice.deleteOrder(Integer.parseInt(pressdel));
+		String result = smservice.deleteOrder(Integer.parseInt(orderId));
 		if(result.equals("Deleted")) {
 			List<AllOrdersDTO> aod=  smservice.getOrders(userId);
 			session.setAttribute("orderList", aod);
 		}
 		
 		return "orderhistory";
+		
+		
+		
+		
 		
 	}
 
