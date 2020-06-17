@@ -38,6 +38,7 @@ public class OrdersDetails {
 		this.status = status;
 		this.traderName = traderName;
 	}
+	
 
 	public int getOrderId() {
 		return orderId;

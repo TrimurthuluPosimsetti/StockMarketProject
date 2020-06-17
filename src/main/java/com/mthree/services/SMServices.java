@@ -47,6 +47,7 @@ public class SMServices {
 			s.marketOrder(od, sdto,od.getBuyOrSell(),20);//20% is the margin in market Order
 		}
 		else {
+			System.out.println("limit");
 			odto=smrepo.getOrderCompleteBookRepository(tn,cn,bs,"auction");
 			s.limitOrder(od, odto,od.getBuyOrSell());
 			}

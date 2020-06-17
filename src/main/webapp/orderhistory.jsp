@@ -131,6 +131,7 @@ input[type=submit] {
 <%!
 List<OrdersDetails> orders;
 %>
+<form mwthod="post">
 <table class="container">
 	<thead>
 		<tr>
@@ -163,6 +164,7 @@ List<OrdersDetails> orders;
 }
 %>
 </table>
+</form>
 <form>
 <p class="p-container">
 	<input type="submit" name="back" id="back" value="Back To Home" formaction="homepage.jsp">
