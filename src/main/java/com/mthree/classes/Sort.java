@@ -49,6 +49,8 @@ public class Sort {
 		
 		int flag=0;
 		
+		OrdersDetails od=null;
+		
 		if(bs.equals("buy")) {
 			
 			
@@ -59,29 +61,39 @@ public class Sort {
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()<=price/noofShares || o.getPrice()/o.getNoofShares()<=price+(price*margin/100)/noofShares) {
 					
-					flag=1;
+					if(flag==0) {
+						System.out.println("flag"+flag);
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
-					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
+					od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
+					}
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						od.setPrice(od.getPrice());
 						od.setStatus("owned");
-						od=smrepo.save(od);
+						if(flag!=1) {
+							OrdersDetails abc=smrepo.save(od);}
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares()-od.getNoofShares(),o.getPrice()-(o.getPrice()/o.getNoofShares())*od.getNoofShares(),"auction");
 						od.setPrice((o.getPrice()/o.getNoofShares())*od.getNoofShares());		
 						od.setStatus("owned");
-						OrdersDetails abc=smrepo.save(od);
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
+						if(flag!=1) {
+							OrdersDetails abc=smrepo.save(od);}
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
-						OrdersDetails abc=smrepo.save(od);
-						i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
+						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
+						od.setPrice(od.getPrice()-o.getPrice());
+						od.setStatus("auction");
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						System.out.println("order"+od.getOrderId()+" "+od.getNoofShares()+" "+od.getPrice());
+						//i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
 					}
+					flag=1;
 					
 				}
 				
@@ -98,28 +110,36 @@ public class Sort {
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()>=price/noofShares || o.getPrice()/o.getNoofShares()>=(price-price*20/100)/noofShares) {
 					
-					flag=1;
+					if(flag==0) {
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
-					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
+					od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);}
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),o.getPrice(),"owned");
 						od.setPrice(o.getPrice());
 						od.setStatus("sold");
-						od=smrepo.save(od);
+						if(flag!=1) {
+							OrdersDetails abc=smrepo.save(od);}
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares()-od.getNoofShares(),o.getPrice()-od.getPrice(),"auction");		
 						od.setStatus("sold");
-						OrdersDetails abc=smrepo.save(od);
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
+						if(flag!=1) {
+							OrdersDetails abc=smrepo.save(od);}
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),(od.getPrice()/od.getNoofShares())*o.getNoofShares(),"owned");
-						OrdersDetails abc=smrepo.save(od);
-						i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),od.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),od.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
+						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
+						od.setPrice(od.getPrice()-o.getPrice());
+						od.setStatus("auction");
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						//i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
+						
 					}
+					flag=1;
 					
 				}
 				
@@ -129,7 +149,7 @@ public class Sort {
 		
 		if(flag==0) {
 			OrderBookDetails obd=smrepoOBD.getOrderBookDetails("nyse");
-			OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
+			od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 			smrepo.save(od);
 			return redirectPageName+"nodeal";
 		}
@@ -159,26 +179,34 @@ public class Sort {
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()<=od.getPrice()/od.getNoofShares()) {
 					
-					flag=1;
+					
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						od.setStatus("owned");
-						od=smrepo.save(od);
+						if(flag!=1) {
+						od=smrepo.save(od);}
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares()-od.getNoofShares(),o.getPrice()-(o.getPrice()/o.getNoofShares())*od.getNoofShares(),"auction");
 						od.setPrice((o.getPrice()/o.getNoofShares())*od.getNoofShares());		
 						od.setStatus("owned");
-						OrdersDetails abc=smrepo.save(od);
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
-						OrdersDetails abc=smrepo.save(od);
-						i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
+						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
+						od.setPrice(od.getPrice()-o.getPrice());
+						od.setStatus("auction");
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						//i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
+						
 					}
+					flag=1;
 					
 				}
 				
@@ -194,26 +222,34 @@ public class Sort {
 				
 				//when shares price per share same for both buyer and seller
 				if(o.getPrice()/o.getNoofShares()>=od.getPrice()/od.getNoofShares()) {
-					flag=1;
+					
 					//System.out.println(o.getNoofShares()+" "+od.getNoofShares());
 					if(o.getNoofShares()==od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),od.getPrice(),"owned");
 						od.setStatus("sold");
-						od=smrepo.save(od);
+						if(flag!=1) {
+							od=smrepo.save(od);}
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares()-od.getNoofShares(),o.getPrice()-od.getPrice(),"auction");		
 						od.setStatus("sold");
-						OrdersDetails abc=smrepo.save(od);
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),(od.getPrice()/od.getNoofShares())*o.getNoofShares(),"owned");
-						OrdersDetails abc=smrepo.save(od);
-						i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
-						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),od.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),od.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
+						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
+						od.setPrice(od.getPrice()-o.getPrice());
+						od.setStatus("auction");
+						if(flag!=1) {
+							od=smrepo.save(od);}
+						//i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
+						
 					}
+					flag=1;
 					
 				}
 				
