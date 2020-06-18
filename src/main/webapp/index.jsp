@@ -312,7 +312,7 @@ label:hover ~ input[type=password] {
   <h1>Log in</h1>
   <div class="inset">
   <p>
-    <label for="email">EMAIL ADDRESS</label>
+    <label for="email">USER NAME</label>
     <input type="text" name="email" id="email">
   </p>
   <p>

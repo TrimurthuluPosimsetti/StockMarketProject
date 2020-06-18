@@ -150,12 +150,12 @@ alert("Invalid Username or Password!");
   <h1>Log in</h1>
   <div class="inset">
   <p>
-    <label for="email">EMAIL ADDRESS</label>
-    <input type="text" name="email" id="email">
+    <label for="email">USER NAME</label>
+    <input type="text" name="email" id="email" required>
   </p>
   <p>
     <label for="password">PASSWORD</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required>
   </p>
   </div>
   <p class="p-container">

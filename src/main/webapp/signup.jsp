@@ -313,16 +313,16 @@ label:hover ~ input[type=password] {
   <h1>Sign up</h1>
   <div class="inset">
   <p>
-    <label for="email">EMAIL ADDRESS</label>
-    <input type="text" name="email" id="email">
+    <label for="email">USER NAME</label>
+    <input type="text" name="email" id="email" required>
   </p>
   <p>
     <label for="password">PASSWORD</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required>
   </p>
   <p>
     <label for="password">CONFIRM PASSWORD</label>
-    <input type="password" name="cpassword" id="password">
+    <input type="password" name="cpassword" id="password" required>
   </p>
   </div>
   <p class="p-container">
