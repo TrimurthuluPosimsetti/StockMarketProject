@@ -43,7 +43,7 @@ public class Sort {
 	@Autowired 
 	private SMRepositoryOBD smrepoOBD;
 	
-	public void marketOrder(int userId, float price, int noofShares, String cn, String bs, String status,String tn,List<SorDTO> odto,float margin) {
+	public String marketOrder(int userId, float price, int noofShares, String cn, String bs, String status,String tn,List<SorDTO> odto,float margin,String redirectPageName) {
 		
 		Collections.sort(odto,new comp2());
 		
@@ -131,6 +131,10 @@ public class Sort {
 			OrderBookDetails obd=smrepoOBD.getOrderBookDetails("nyse");
 			OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 			smrepo.save(od);
+			return redirectPageName+"nodeal";
+		}
+		else {
+			return redirectPageName+"deal";
 		}
 
 		
@@ -138,7 +142,7 @@ public class Sort {
 		
 	}
 
-	public void limitOrder(OrdersDetails od,List<OrderDTO> odto,String bors){
+	public String limitOrder(OrdersDetails od,List<OrderDTO> odto,String bors,String redirectPageName){
 		
 		
 		Collections.sort(odto,new comp());
@@ -219,6 +223,10 @@ public class Sort {
 		
 		if(flag==0) {
 			smrepo.save(od);
+			return redirectPageName+"nodeal";
+		}
+		else {
+			return redirectPageName+"deal";
 		}
 		
 	}

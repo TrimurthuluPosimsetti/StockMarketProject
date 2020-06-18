@@ -28,7 +28,7 @@ public class UserContoller {
 			return "redirect:/index";
 		}
 		else {
-			return "signup";
+			return "signuperror";
 		}
 
 		
@@ -51,7 +51,7 @@ public class UserContoller {
 //			return new ModelAndView("homepage");
 		}
 		else {
-			return "index";
+			return "loginerror";
 		}
 	
 	}

@@ -32,9 +32,9 @@ public class SMServices {
 		return smrepo.getOrderBookRepo();
 	}
 	
-	public void getOrderCompleteBookService(int userId, float price, int noofShares, String cn, String bs,String status, String tn){
+	public String getOrderCompleteBookService(int userId, float price, int noofShares, String cn, String bs,String status, String tn){
 		
-		
+		String redirectPageName=null;
 		List<OrderDTO> odto=null;
 		List<SorDTO> sdto=null;
 		if(bs.equals("buy")) {
@@ -52,7 +52,7 @@ public class SMServices {
 			else {
 				bs="buy";
 			}
-			s.marketOrder(userId,price,noofShares,cn,bs,"auction",tn,sdto,20);//20% is the margin in market Order
+			redirectPageName=s.marketOrder(userId,price,noofShares,cn,bs,"auction",tn,sdto,20,"homepage");//20% is the margin in market Order
 		}
 		else {
 			//System.out.println("limit");
@@ -65,9 +65,10 @@ public class SMServices {
 			}
 			OrderBookDetails obd=smrepoOBD.getOrderBookDetails(tn);
 			OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
-			s.limitOrder(od, odto,od.getBuyOrSell());
+			redirectPageName=s.limitOrder(od, odto,od.getBuyOrSell(),"homepage");
 			}
 		//return smrepo.getOrderCompleteBookRepository();
+		return redirectPageName;
 	}
 	
 	public List<AllOrdersDTO> getOrders(int userId){

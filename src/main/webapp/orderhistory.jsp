@@ -161,6 +161,7 @@ List<AllOrdersDTO> orders;
 			<th><h1>Shares</h1></th>
 			<th><h1>Price</h1></th>
 			<th><h1>Status</h1></th>
+			<th><h1>Buy or Sell</h1></th>
 			<th><h1>Cancel Order</h1></th>
 		</tr>
 	</thead>
@@ -169,6 +170,7 @@ List<AllOrdersDTO> orders;
 	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
 	for(AllOrdersDTO o : orders)
 	{
+		if(o.getStatus().equals("auction")){
 	
 %>
 	<tbody>
@@ -177,10 +179,11 @@ List<AllOrdersDTO> orders;
 			<td><%=o.getNoofShares()%></td>
 			<td><%=o.getPrice()%></td>
 			<td>Auction</td>
+			<td><%=o.getBuyOrSell()%></td>
 			<td> <button type="submit" name="deleteOrder"  value="<%= o.getOrderId() %>">Delete</button></td>
 		</tr>
 	</tbody>
-	<% 
+	<% }
 }
 %>
 </table>
@@ -205,6 +208,7 @@ List<AllOrdersDTO> orders;
 	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
 	for(AllOrdersDTO o : orders)
 	{
+		if(o.getStatus().equals("owned")){
 	
 %>
 	<tbody>
@@ -215,7 +219,7 @@ List<AllOrdersDTO> orders;
 			<td>Owned</td>
 		</tr>
 	</tbody>
-	<% 
+	<% }
 }
 %>
 </table>
@@ -240,7 +244,7 @@ List<AllOrdersDTO> orders;
 	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
 	for(AllOrdersDTO o : orders)
 	{
-	
+		if(o.getStatus().equals("sold")){
 %>
 	<tbody>
 		<tr>
@@ -250,7 +254,7 @@ List<AllOrdersDTO> orders;
 			<td>Sold</td>
 		</tr>
 	</tbody>
-	<% 
+	<% }
 }
 %>
 </table>

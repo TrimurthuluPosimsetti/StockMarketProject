@@ -10,16 +10,19 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public UserInfo signupUser(UserSignupDto userSignupDto) {
+		System.out.println("working");
 		UserInfo newUser = new UserInfo();
 		
 		UserInfo user = userRepository.findByUserName(userSignupDto.getUserName());
 		
 		if(user != null) {
-            throw new RuntimeException("User already exists!");
+			System.out.println("UserName already exists!");
+            return null;
         }
 		
 		if(!userSignupDto.getPassword().equals(userSignupDto.getPasswordConfirm())) {
-			throw new RuntimeException("Password does not match.");
+			System.out.println("Password and Confirm Password does not match.");
+			return null;
 		}
 		
 		newUser.setUserName(userSignupDto.getUserName());
@@ -30,15 +33,17 @@ public class UserService {
 	
 	
 	public String loginUser(UserLoginDto userLoginDto) {
-		
+		System.out.println("Workign");
 		
 		UserInfo user = userRepository.findByUserName(userLoginDto.getUserName());
 		
 		if(user == null) {
-            throw new RuntimeException("User does not exist.");
+			System.out.println("User does not exist.");
+            return null;
         }
         if(!user.getPassword().equals(userLoginDto.getPassword())){
-            throw new RuntimeException("Wrong password!");
+			System.out.println("Wrong Password!!!");
+			return null;
         }
         
         return "logged in!";

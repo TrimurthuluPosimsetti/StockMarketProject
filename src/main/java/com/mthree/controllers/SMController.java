@@ -22,20 +22,19 @@ public class SMController {
 	public String welcomePage() {
 		return "index";
 	}
-	
-	@GetMapping("/index")
-	public List<OrderDTO> getOrderBook(){
-		return smservice.getOrderBookService();	
-	}
+//	
+//	@GetMapping("/index")
+//	public List<OrderDTO> getOrderBook(){
+//		return smservice.getOrderBookService();	
+//	}
 
 	
 	@GetMapping("/validate")
 	public String getCompleteOrderBook(@RequestParam("userid") int userId,@RequestParam("price") float price,@RequestParam("shares") int noofShares,@RequestParam("companyname") String companyName,@RequestParam("buyorsell") String buyOrSell,@RequestParam("tradername") String traderName){
 		 
 		 //System.out.println(userId+" "+price+" "+noofShares+" "+companyName+" "+buyOrSell+" "+obd.getTraderName());
-		 smservice.getOrderCompleteBookService(userId,price,noofShares,companyName,buyOrSell,"auction",traderName);
-		 ModelAndView mv=new ModelAndView();
-		 return "redirect:/getOrders?userId="+String.valueOf(userId);
+		 return smservice.getOrderCompleteBookService(userId,price,noofShares,companyName,buyOrSell,"auction",traderName);
+		 //"redirect:/getOrders?userId="+String.valueOf(userId);
 	}
 	
 	
