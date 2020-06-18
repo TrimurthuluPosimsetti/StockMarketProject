@@ -315,7 +315,7 @@ alert("User Name already exist or password and confirm password doesn't match");
   <h1>Sign up</h1>
   <div class="inset">
   <p>
-    <label for="email">EMAIL ADDRESS</label>
+    <label for="email">USER NAME</label>
     <input type="text" name="email" id="email">
   </p>
   <p>

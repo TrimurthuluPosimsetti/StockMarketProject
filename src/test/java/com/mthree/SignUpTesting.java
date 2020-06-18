@@ -3,15 +3,19 @@ package com.mthree;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mthree.users.UserLoginDto;
+import com.mthree.controllers.SMController;
 import com.mthree.users.UserService;
 
 class SignUpTesting {
 
-	@Mock
+	
+	@Autowired
 	private UserService userService;
+	
+	@Autowired 
+	private SMController uc;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -23,15 +27,9 @@ class SignUpTesting {
 
 	@Test
 	void test() {
-		//assertEquals("maya",userService.signupUser(new UserSignupDto("maya","123","123")).getUserName());
-		//assertEquals("123",userService.signupUser(new UserSignupDto("ammu","123","123")).getPassword());
-//		System.out.println("Hello");
-//		UserSignupDto user=new UserSignupDto("amm","dao","dao");
-//		UserInfo newUser = userService.signupUser(user);
-//		UserLoginDto udto=new UserLoginDto("ammu","ammu");
-//		System.out.println("Hello");
-//		String login =  userService.loginUser(udto);
-		//assertEquals(null,userService.signupUser(new UserSignupDto("amm","12","123")));
+//		System.out.println("hello");
+//		System.out.println(uc.welcomePage());
+
 	}
 
 }

@@ -25,7 +25,7 @@ public class UserContoller {
 		UserInfo newUser = userService.signupUser(user);
 		
 		if(newUser!=null) {
-			return "redirect:/index";
+			return "redirect:/index.jsp";
 		}
 		else {
 			return "signuperror";
