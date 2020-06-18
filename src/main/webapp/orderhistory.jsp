@@ -5,18 +5,24 @@
 <head>
 <style>
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
-  line-height: 1.42em;
-  color:#A7A1AE;
-  background-color:#1F2739;background-image: url("banner.jpg");
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  color:white;
+  font-size:12px;
+  background:#333 url(/images/classy_fabric.png);
   background-color: #cccccc;
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background: url(banner.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-
+table td:empty::before{
+content:"NONE" ;color:#FB667A;
+}
 h1 {
   font-size:3em; 
   font-weight: 300;
@@ -117,6 +123,21 @@ input[type=submit] {
   cursor:pointer;
   font-size:13px;
 }
+button {
+ 	padding:5px 20px;
+  border:1px solid rgba(0,0,0,0.4);
+  text-shadow:0 -1px 0 rgba(0,0,0,0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 10px 10px rgba(255,255,255,0.1);
+  border-radius:0.3em;
+  background:#0184ff;
+  color:white;
+  float:right;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:13px;
+}
 @media (max-width: 800px) {
 .container td:nth-child(4),
 .container th:nth-child(4) { display: none; }
@@ -126,7 +147,7 @@ input[type=submit] {
 <body>
 <pre>
 
-<h1><span class="blue"></span>Order Details<span class="blue"></span></h1>
+<h1><span class="blue"></span>Auction<span class="blue"></span></h1>
 </pre>
 
 <%!
@@ -139,9 +160,8 @@ List<AllOrdersDTO> orders;
 			<th><h1>Company</h1></th>
 			<th><h1>Shares</h1></th>
 			<th><h1>Price</h1></th>
-			
 			<th><h1>Status</h1></th>
-			<th><h1></h1></th>
+			<th><h1>Cancel Order</h1></th>
 		</tr>
 	</thead>
 	<%
@@ -156,8 +176,78 @@ List<AllOrdersDTO> orders;
 			<td> <%=o.getCompanyName()%> </td>
 			<td><%=o.getNoofShares()%></td>
 			<td><%=o.getPrice()%></td>
-			<td><%=o.getStatus()%></td>
+			<td>Auction</td>
 			<td> <button type="submit" name="deleteOrder"  value="<%= o.getOrderId() %>">Delete</button></td>
+		</tr>
+	</tbody>
+	<% 
+}
+%>
+</table>
+</form>
+<pre>
+
+<h1><span class="blue"></span>Owned<span class="blue"></span></h1>
+</pre>
+
+<form method="post">
+<table class="container">
+	<thead>
+		<tr>
+			<th><h1>Company</h1></th>
+			<th><h1>Shares</h1></th>
+			<th><h1>Price</h1></th>
+			<th><h1>Status</h1></th>
+		</tr>
+	</thead>
+	<%
+
+	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
+	for(AllOrdersDTO o : orders)
+	{
+	
+%>
+	<tbody>
+		<tr>
+			<td> <%=o.getCompanyName()%> </td>
+			<td><%=o.getNoofShares()%></td>
+			<td><%=o.getPrice()%></td>
+			<td>Owned</td>
+		</tr>
+	</tbody>
+	<% 
+}
+%>
+</table>
+</form>
+<pre>
+
+<h1><span class="blue"></span>Sold<span class="blue"></span></h1>
+</pre>
+
+<form method="post">
+<table class="container">
+	<thead>
+		<tr>
+			<th><h1>Company</h1></th>
+			<th><h1>Shares</h1></th>
+			<th><h1>Price</h1></th>
+			<th><h1>Status</h1></th>
+		</tr>
+	</thead>
+	<%
+
+	orders = (List<AllOrdersDTO>) session.getAttribute("orderList");
+	for(AllOrdersDTO o : orders)
+	{
+	
+%>
+	<tbody>
+		<tr>
+			<td> <%=o.getCompanyName()%> </td>
+			<td><%=o.getNoofShares()%></td>
+			<td><%=o.getPrice()%></td>
+			<td>Sold</td>
 		</tr>
 	</tbody>
 	<% 

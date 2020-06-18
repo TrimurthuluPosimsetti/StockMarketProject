@@ -352,10 +352,14 @@ label:hover ~ input[type=float] {
     <label for="price">Number of shares</label>
     <input type="number" name="shares" id="shares">
   </p>
-  <p>
     <label for="Company Name">Company Name</label>
-    <input type="text" name="companyname" id="company name">
-  </p>
+  <select  name="companyname" id="company name">
+  <option>--select</option>
+  <option value="google">Google</option>
+  <option value="flipkart">Flipkart</option>
+  <option value="amazon">Amazon</option>
+</select>
+  
   <label for="buy or sell">Buy or Sell:</label>
 
   <select name="buyorsell" id="buy or sell">
@@ -366,9 +370,9 @@ label:hover ~ input[type=float] {
 <label for="Trader Name">Trader Name:</label>
 <select name="tradername" id="Trader Name">
   <option>--select</option>
-  <option value="nyse">nyse</option>
-  <option value="bse">bse</option>
-  <option value="sor">sor</option>
+  <option value="nyse">NYSE</option>
+  <option value="bse">BSE</option>
+  <option value="sor">SORT</option>
 </select>
   </div>
   <p class="p-container">

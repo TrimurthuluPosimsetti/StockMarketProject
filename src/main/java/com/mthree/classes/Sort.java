@@ -63,7 +63,7 @@ public class Sort {
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
 					OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						od.setPrice(od.getPrice());
 						od.setStatus("owned");
 						od=smrepo.save(od);
@@ -77,7 +77,7 @@ public class Sort {
 						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						OrdersDetails abc=smrepo.save(od);
 						i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						od=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
@@ -132,6 +132,7 @@ public class Sort {
 			OrdersDetails od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 			smrepo.save(od);
 		}
+
 		
 		
 		
@@ -156,7 +157,7 @@ public class Sort {
 					
 					flag=1;
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						od.setStatus("owned");
 						od=smrepo.save(od);
 						break;
@@ -169,7 +170,7 @@ public class Sort {
 						od=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),0,o.getPrice(),"sold");
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						OrdersDetails abc=smrepo.save(od);
 						i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						od=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
