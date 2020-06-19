@@ -67,11 +67,19 @@ public class Sort {
 					od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);
 					}
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
-						od.setPrice(od.getPrice());
+						float p=0;
+						if(o.getPrice()>od.getPrice()) {
+							p=od.getPrice();
+						}
+						else {
+							p=o.getPrice();
+						}
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),p,"sold");
+						od.setPrice(p);
 						od.setStatus("owned");
 						if(flag!=1) {
 							OrdersDetails abc=smrepo.save(od);}
+						flag=1;
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
@@ -81,6 +89,7 @@ public class Sort {
 						if(flag!=1) {
 							OrdersDetails abc=smrepo.save(od);}
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
+						flag=1;
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
@@ -92,8 +101,9 @@ public class Sort {
 						System.out.println("order"+od.getOrderId()+" "+od.getNoofShares()+" "+od.getPrice());
 						//i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
+						flag=1;
 					}
-					flag=1;
+					
 					
 				}
 				
@@ -114,11 +124,19 @@ public class Sort {
 					OrderBookDetails obd=smrepoOBD.getOrderBookDetails(o.getTraderName());
 					od=new OrdersDetails(1,userId,price,noofShares,cn,bs,"auction",obd);}
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),o.getPrice(),"owned");
-						od.setPrice(o.getPrice());
+						float p=0;
+						if(o.getPrice()>od.getPrice()) {
+							p=od.getPrice();
+						}
+						else {
+							p=o.getPrice();
+						}
+						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),p,"owned");
+						od.setPrice(p);
 						od.setStatus("sold");
 						if(flag!=1) {
 							OrdersDetails abc=smrepo.save(od);}
+						flag=1;
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
@@ -127,6 +145,7 @@ public class Sort {
 						if(flag!=1) {
 							OrdersDetails abc=smrepo.save(od);}
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
+						flag=1;
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),(od.getPrice()/od.getNoofShares())*o.getNoofShares(),"owned");
@@ -138,8 +157,9 @@ public class Sort {
 							od=smrepo.save(od);}
 						//i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						
+						flag=1;
 					}
-					flag=1;
+
 					
 				}
 				
@@ -181,10 +201,18 @@ public class Sort {
 					
 					
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
+						float p=0;
+						if(o.getPrice()>od.getPrice()) {
+							p=od.getPrice();
+						}
+						else {
+							p=o.getPrice();
+						}
+						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),p,"sold");
 						od.setStatus("owned");
 						if(flag!=1) {
 						od=smrepo.save(od);}
+						flag=1;
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
@@ -194,6 +222,7 @@ public class Sort {
 						if(flag!=1) {
 							od=smrepo.save(od);}
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
+						flag=1;
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
@@ -205,8 +234,8 @@ public class Sort {
 							od=smrepo.save(od);}
 						//i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						
+						flag=1;
 					}
-					flag=1;
 					
 				}
 				
@@ -225,10 +254,18 @@ public class Sort {
 					
 					//System.out.println(o.getNoofShares()+" "+od.getNoofShares());
 					if(o.getNoofShares()==od.getNoofShares()) {
-						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),od.getPrice(),"owned");
+						float p=0;
+						if(o.getPrice()>od.getPrice()) {
+							p=od.getPrice();
+						}
+						else {
+							p=o.getPrice();
+						}
+						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),p,"owned");
 						od.setStatus("sold");
 						if(flag!=1) {
 							od=smrepo.save(od);}
+						flag=1;
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
@@ -237,6 +274,7 @@ public class Sort {
 						if(flag!=1) {
 							od=smrepo.save(od);}
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"buy","owned",od.getTraderName()));
+						flag=1;
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),(od.getPrice()/od.getNoofShares())*o.getNoofShares(),"owned");
@@ -247,9 +285,9 @@ public class Sort {
 						if(flag!=1) {
 							od=smrepo.save(od);}
 						//i=smrepo.updateSellDetailsOfSeller(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
-						
+						flag=1;
 					}
-					flag=1;
+					
 					
 				}
 				
