@@ -1,14 +1,12 @@
 package com.mthree.controllers;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.mthree.dto.OrderDTO;
 import com.mthree.services.SMServices;
 
 @Controller
@@ -30,10 +28,10 @@ public class SMController {
 
 	
 	@GetMapping("/validate")
-	public String getCompleteOrderBook(@RequestParam("userid") int userId,@RequestParam("price") float price,@RequestParam("shares") int noofShares,@RequestParam("companyname") String companyName,@RequestParam("buyorsell") String buyOrSell,@RequestParam("tradername") String traderName){
+	public String getCompleteOrderBook(HttpServletRequest request,@RequestParam("price") float price,@RequestParam("shares") int noofShares,@RequestParam("companyname") String companyName,@RequestParam("buyorsell") String buyOrSell,@RequestParam("tradername") String traderName){
 		 
 		 //System.out.println(userId+" "+price+" "+noofShares+" "+companyName+" "+buyOrSell+" "+obd.getTraderName());
-		 return smservice.getOrderCompleteBookService(userId,price,noofShares,companyName,buyOrSell,"auction",traderName);
+		return smservice.getOrderCompleteBookService((Integer)request.getSession().getAttribute("userId"),price,noofShares,companyName,buyOrSell,"auction",traderName);
 		 //"redirect:/getOrders?userId="+String.valueOf(userId);
 	}
 	

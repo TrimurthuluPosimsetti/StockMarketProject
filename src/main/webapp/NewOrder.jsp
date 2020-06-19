@@ -341,10 +341,6 @@ label:hover ~ input[type=float] {
   <h1>New Order</h1>
    <div class="inset">
   <p>
-    <label for="userid">User Id</label>
-    <input type="number" name="userid" id="userid">
-  </p>
-  <p>
     <label for="price">Price</label>
     <input type="number" name="price" id="price">
   </p>

@@ -216,6 +216,7 @@ public class Sort {
 						break;
 					}
 					else if(o.getNoofShares()>od.getNoofShares()) {
+						System.out.println("bfore>"+od);
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares()-od.getNoofShares(),o.getPrice()-(o.getPrice()/o.getNoofShares())*od.getNoofShares(),"auction");
 						od.setPrice((o.getPrice()/o.getNoofShares())*od.getNoofShares());		
 						od.setStatus("owned");
@@ -223,8 +224,10 @@ public class Sort {
 							od=smrepo.save(od);}
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice(),od.getNoofShares(),od.getCompanyName(),"sell","sold",od.getTraderName()));
 						flag=1;
+						System.out.println("after>"+od);
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
+						System.out.println("bfore<"+od);
 						i=smrepo.updateSellDetailsOfSeller(o.getOrderId(),o.getNoofShares(),o.getPrice(),"sold");
 						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),o.getPrice(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"owned",od.getTraderName()));
 						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
@@ -232,6 +235,7 @@ public class Sort {
 						od.setStatus("auction");
 						if(flag!=1) {
 							od=smrepo.save(od);}
+						System.out.println("after<"+od);
 						//i=smrepo.updateBuyDetailsOfBuyer(od.getOrderId(),od.getNoofShares()-o.getNoofShares(), od.getPrice()-o.getPrice(), "auction");
 						
 						flag=1;
@@ -278,7 +282,7 @@ public class Sort {
 					}
 					else if(o.getNoofShares()<od.getNoofShares()){
 						i=smrepo.updateBuyDetailsOfBuyer(o.getOrderId(),o.getNoofShares(),(od.getPrice()/od.getNoofShares())*o.getNoofShares(),"owned");
-						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),od.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
+						OrdersDetails abc=smrepo.save(new OrdersDetails(111,od.getUserId(),od.getPrice()-(od.getPrice()/od.getNoofShares())*o.getNoofShares(),o.getNoofShares(),od.getCompanyName(),od.getBuyOrSell(),"sold",od.getTraderName()));
 						od.setNoofShares(od.getNoofShares()-o.getNoofShares());
 						od.setPrice(od.getPrice()-o.getPrice());
 						od.setStatus("auction");

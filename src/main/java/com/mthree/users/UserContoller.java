@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserContoller {
 	
+	HttpSession session;
 	@Autowired
 	private UserService userService;
 	
@@ -44,7 +45,7 @@ public class UserContoller {
 		
 		
 		if (login == "logged in!") {
-			HttpSession session=request.getSession(true);
+			session=request.getSession(true);
 			session.setAttribute("userId",userRepository.getId(username));
 			System.out.println(session.getAttribute("userId"));
 			return "redirect:/homepage.jsp";
